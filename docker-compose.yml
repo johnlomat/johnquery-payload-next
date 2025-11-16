@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: johnquery-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: johnquery_portfolio
+    ports:
+      - '5432:5432'
+    volumes:
+      - johnquery_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  johnquery_postgres_data:
