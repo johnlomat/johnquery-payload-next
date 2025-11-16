@@ -6,9 +6,6 @@ import { projectsService } from '@/services'
 const ProjectsSection = async () => {
   const { docs: projectsData } = await projectsService.getAllProjects()
 
-  // Debug logging
-  console.log('First project:', JSON.stringify(projectsData[0], null, 2))
-
   return (
     <>
       <section className="relative space-y-20 bg-neutral-900 pt-24" id="projects">

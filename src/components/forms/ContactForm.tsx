@@ -41,7 +41,6 @@ export default function ContactForm() {
         })
       }
     } catch (e) {
-      console.log(e)
       setResponseMessage({
         isSuccessful: false,
         message: 'Oops something went wrong. Please try again.',
