@@ -1,9 +1,10 @@
-import { payloadClient } from '@/lib/clients/payload'
+import { getPayloadClient } from '@/lib/payload'
 
 class ProjectsService {
   async getAllProjects(limit = 999) {
     try {
-      const result = await payloadClient.find({
+      const payload = await getPayloadClient()
+      const result = await payload.find({
         collection: 'projects',
         limit,
         depth: 2,
@@ -18,7 +19,8 @@ class ProjectsService {
 
   async getProjectById(id: number | string) {
     try {
-      return await payloadClient.findByID({
+      const payload = await getPayloadClient()
+      return await payload.findByID({
         collection: 'projects',
         id,
         depth: 2,

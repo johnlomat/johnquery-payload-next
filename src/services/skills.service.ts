@@ -1,9 +1,10 @@
-import { payloadClient } from '@/lib/clients/payload'
+import { getPayloadClient } from '@/lib/payload'
 
 class SkillsService {
   async getAllSkills() {
     try {
-      return await payloadClient.find({
+      const payload = await getPayloadClient()
+      return await payload.find({
         collection: 'skills',
         depth: 2,
       })
@@ -15,7 +16,8 @@ class SkillsService {
 
   async getSkillByTitle(title: string) {
     try {
-      const { docs } = await payloadClient.find({
+      const payload = await getPayloadClient()
+      const { docs } = await payload.find({
         collection: 'skills',
         where: {
           title: {

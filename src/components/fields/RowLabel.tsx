@@ -2,7 +2,6 @@
 
 import { useRowLabel } from '@payloadcms/ui'
 import { useEffect, useState } from 'react'
-import { payloadClient } from '@/lib/clients/payload'
 
 type RowData = Record<string, unknown>
 
@@ -46,21 +45,19 @@ async function getLabel(data: RowData | undefined): Promise<string | null> {
     // If it's just an ID (number or string), try to fetch the relationship
     if ((typeof value === 'number' || typeof value === 'string') && value) {
       try {
-        const { docs } = await payloadClient.find({
-          collection: 'technologies',
-          where: { id: { equals: value } },
-          limit: 1,
-        })
-        if (docs[0]?.title) return docs[0].title
+        const response = await fetch(`/api/technologies?where[id][equals]=${value}&limit=1`)
+        if (response.ok) {
+          const result = await response.json()
+          if (result.docs?.[0]?.title) return result.docs[0].title
+        }
       } catch {
         // Try media collection if technologies fails
         try {
-          const { docs } = await payloadClient.find({
-            collection: 'media',
-            where: { id: { equals: value } },
-            limit: 1,
-          })
-          if (docs[0]?.filename) return docs[0].filename
+          const response = await fetch(`/api/media?where[id][equals]=${value}&limit=1`)
+          if (response.ok) {
+            const result = await response.json()
+            if (result.docs?.[0]?.filename) return result.docs[0].filename
+          }
         } catch {
           // Ignore fetch errors
         }

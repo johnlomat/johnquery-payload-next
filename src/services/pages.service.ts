@@ -1,9 +1,10 @@
-import { payloadClient } from '@/lib/clients/payload'
+import { getPayloadClient } from '@/lib/payload'
 
 class PagesService {
   async getPageBySlug(slug: string) {
     try {
-      const { docs } = await payloadClient.find({
+      const payload = await getPayloadClient()
+      const { docs } = await payload.find({
         collection: 'pages',
         where: {
           slug: {
@@ -22,7 +23,8 @@ class PagesService {
 
   async getAllPages() {
     try {
-      return await payloadClient.find({
+      const payload = await getPayloadClient()
+      return await payload.find({
         collection: 'pages',
       })
     } catch (error) {

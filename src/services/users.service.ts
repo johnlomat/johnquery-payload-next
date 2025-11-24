@@ -1,9 +1,10 @@
-import { payloadClient } from '@/lib/clients/payload'
+import { getPayloadClient } from '@/lib/payload'
 
 class UsersService {
   async getUserByEmail(email: string) {
     try {
-      const { docs } = await payloadClient.find({
+      const payload = await getPayloadClient()
+      const { docs } = await payload.find({
         collection: 'users',
         where: {
           email: {
