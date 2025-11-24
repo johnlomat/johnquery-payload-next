@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 60 // Revalidate every 60 seconds (ISR)
 
 import { notFound } from 'next/navigation'
 import Serialize from '@/components/richtext/serialize'
