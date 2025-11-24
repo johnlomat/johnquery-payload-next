@@ -15,6 +15,7 @@ import Projects from './collections/Projects'
 import Skills from './collections/Skills'
 import Technologies from './collections/Technologies'
 import { cloudinaryAdapter } from './cloudinary-adapter'
+import KeywordsField from './fields/payload-seo-plugin/keywords-field'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -51,6 +52,7 @@ export default buildConfig({
       uploadsCollection: 'media',
       generateTitle: ({ doc }: { doc: any }) =>
         `${doc?.title?.value || doc?.title || 'Page'} - John Lomat`,
+      fields: ({ defaultFields }) => [...defaultFields, KeywordsField],
     }),
     cloudStoragePlugin({
       collections: {

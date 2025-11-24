@@ -3,22 +3,33 @@ import { pagesService } from '@/services'
 
 export async function generateMetadata() {
   const page = await pagesService.getPageBySlug('privacy-policy')
-  const meta = page?.meta
+  const meta = page?.meta as
+    | {
+        title?: string | null
+        description?: string | null
+        keywords?: string[] | null
+        image?: { url?: string } | number | null
+      }
+    | undefined
 
   return {
     title: meta?.title,
     description: meta?.description,
-    keywords: meta?.keywords?.join(', ') || null,
+    keywords: meta?.keywords?.join(', ') || undefined,
     openGraph: {
       title: meta?.title,
       description: meta?.description,
-      images: meta?.image?.url,
+      images: typeof meta?.image === 'object' ? meta?.image?.url : undefined,
     },
   }
 }
 
 export default async function PrivacyPage() {
   const pageData = await pagesService.getPageBySlug('privacy-policy')
+
+  if (!pageData) {
+    return <div>Page not found</div>
+  }
 
   return (
     <div className="page-content">
