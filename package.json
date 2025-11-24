@@ -34,8 +34,6 @@
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
-    "dotenv": "^17.2.3",
-    "escape-html": "^1.0.3",
     "flowbite-react": "^0.10.2",
     "graphql": "^16.8.1",
     "next": "15.4.7",
