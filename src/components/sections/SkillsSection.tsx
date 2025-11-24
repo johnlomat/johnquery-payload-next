@@ -6,9 +6,9 @@ import { skillsService } from '@/services'
 const SkillsSection = async () => {
   const { docs: skillsData } = await skillsService.getAllSkills()
 
-  const usingNow = skillsData.find((skill: any) => skill.title == 'Using now')
-  const learning = skillsData.find((skill: any) => skill.title == 'Learning')
-  const otherSkills = skillsData.find((skill: any) => skill.title == 'Other skills')
+  const usingNow = skillsData.find((skill) => skill.title === 'Using now')
+  const learning = skillsData.find((skill) => skill.title === 'Learning')
+  const otherSkills = skillsData.find((skill) => skill.title === 'Other skills')
 
   return (
     <section className="py-24 font-montserrat" id="skills">
@@ -21,7 +21,7 @@ const SkillsSection = async () => {
               <h3>Using now:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {usingNow.technologies.map((skill: TechnologyProps, index: number) => (
+              {usingNow?.technologies?.map((skill: TechnologyProps, index: number) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>
@@ -32,7 +32,7 @@ const SkillsSection = async () => {
               <h3>Learning:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {learning.technologies.map((skill: TechnologyProps, index: number) => (
+              {learning?.technologies?.map((skill: TechnologyProps, index: number) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>
@@ -43,7 +43,7 @@ const SkillsSection = async () => {
               <h3>Other skills:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {otherSkills.technologies.map((skill: TechnologyProps, index: number) => (
+              {otherSkills?.technologies?.map((skill: TechnologyProps, index: number) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>

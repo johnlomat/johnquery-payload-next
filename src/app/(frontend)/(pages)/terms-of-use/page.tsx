@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { notFound } from 'next/navigation'
 import Serialize from '@/components/richtext/serialize'
 import { pagesService } from '@/services'

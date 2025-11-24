@@ -1,11 +1,6 @@
+import { Technology } from '@/payload-types'
+
 export interface TechnologyProps {
-  technology: {
-    title: string
-    image_details: {
-      alt: string
-      url: string
-      width: number
-      height: number
-    }
-  }
+  technology?: (number | null) | Technology
+  id?: string | null
 }

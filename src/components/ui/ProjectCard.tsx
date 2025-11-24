@@ -46,11 +46,11 @@ const ProjectCard = ({
         >
           Details
         </Button>
-        {featured_image?.url ? (
+        {typeof featured_image === 'object' && featured_image?.url ? (
           <Image
             src={featured_image.url}
-            width={featured_image.width}
-            height={featured_image.height}
+            width={featured_image.width ?? 600}
+            height={featured_image.height ?? 400}
             alt={featured_image.alt}
             className="text-white grayscale group-hover:grayscale-0"
           />

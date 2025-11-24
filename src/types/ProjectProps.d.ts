@@ -1,22 +1,47 @@
-import { Children } from '@/types/SlateChildrenProps'
-import { TechnologyProps } from '@/types/TechnologyProps'
+import { Media, Technology } from '@/payload-types'
 
 export interface ProjectProps {
   title: string
-  featured_image?: FeaturedImage
-  project_overview: Children
-  website_type: string
-  key_features: Children
-  tech_stacks: TechnologyProps[]
-  demo_link?: string
-  screenshot_link?: string
+  featured_image?: number | Media
+  project_overview?: {
+    root: {
+      type: string
+      children: {
+        type: unknown
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  website_type?: string | null
+  key_features?: {
+    root: {
+      type: string
+      children: {
+        type: unknown
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  tech_stacks?:
+    | {
+        technology?: (number | null) | Technology
+        id?: string | null
+      }[]
+    | null
+  demo_link?: string | null
+  screenshot_link?: string | null
   isOpen?: boolean
   onClose?: () => void
-}
-
-export interface FeaturedImage {
-  url: string
-  alt: string
-  width: number
-  height: number
 }

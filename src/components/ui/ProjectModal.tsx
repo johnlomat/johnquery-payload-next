@@ -53,7 +53,7 @@ const ProjectModal = ({
               Tech Stack
             </div>
             <div className="grid grid-cols-4 flex-wrap gap-6 md:grid-cols-8">
-              {tech_stacks.map((tech, index) => (
+              {tech_stacks?.map((tech, index) => (
                 <TechStack key={index} {...tech} />
               ))}
             </div>
