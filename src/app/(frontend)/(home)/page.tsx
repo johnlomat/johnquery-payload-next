@@ -17,11 +17,10 @@ export async function generateMetadata() {
   return {
     title: meta?.title,
     description: meta?.description,
-    keywords: meta?.keywords?.join(', ') || null,
     openGraph: {
       title: meta?.title,
       description: meta?.description,
-      images: meta?.image?.url,
+      images: typeof meta?.image === 'object' ? meta?.image?.url : undefined,
     },
   }
 }
@@ -40,15 +39,15 @@ export default async function Home() {
               <h1 className="mb-0 text-[1.25rem] font-bold text-white md:mb-4 md:text-[2.5rem] md:text-neutral-900">
                 Hi, I am{' '}
                 <span className="mt-0 block text-[2.1875rem] leading-none md:mt-6 md:text-[5rem]">
-                  {information.first_name} {information.last_name}
+                  {information?.first_name} {information?.last_name}
                 </span>
               </h1>
               <h2 className="text-[0.875rem] font-bold text-white md:text-[1.5rem] xl:text-[#909090]">
-                {information.position}
+                {information?.position}
               </h2>
               <div className="absolute bottom-0 right-0 mt-0 flex w-auto max-w-[10.5rem] flex-col justify-between space-y-4 md:static md:bottom-auto md:right-auto md:mt-12 md:w-full md:flex-row md:space-y-0">
                 <Link
-                  href={`${socialLinks.linkedin}`}
+                  href={socialLinks?.linkedin || '#'}
                   target="_blank"
                   aria-label="See my working experience"
                 >
@@ -60,7 +59,7 @@ export default async function Home() {
                   </div>
                 </Link>
                 <Link
-                  href={`${socialLinks.github}`}
+                  href={socialLinks?.github || '#'}
                   target="_blank"
                   aria-label="See my Github projects"
                 >
@@ -72,7 +71,7 @@ export default async function Home() {
                   </div>
                 </Link>
                 <Link
-                  href={`${socialLinks.codepen}`}
+                  href={socialLinks?.codepen || '#'}
                   target="_blank"
                   aria-label="See my Codepen projects"
                 >
@@ -104,7 +103,7 @@ export default async function Home() {
             <div className="flex w-full flex-col items-center space-y-20">
               <HeadingTwo title="About me" />
               <div className="w-full max-w-[46.875rem] space-y-4 text-center font-open-sans text-[1.0625rem]">
-                <Serialize nodes={information.about_me} />
+                <Serialize nodes={information?.about_me} />
               </div>
             </div>
           </div>
