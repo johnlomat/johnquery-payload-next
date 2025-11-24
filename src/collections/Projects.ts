@@ -91,6 +91,9 @@ const Projects: CollectionConfig = {
               ],
               admin: {
                 initCollapsed: true,
+                components: {
+                  RowLabel: '@/components/fields/RowLabel#RowLabel',
+                },
               },
             },
           ],
