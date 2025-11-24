@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import Serialize from '@/components/richtext/serialize'
 import { pagesService } from '@/services'
 
@@ -28,7 +29,7 @@ export default async function TermsPage() {
   const pageData = await pagesService.getPageBySlug('terms-of-use')
 
   if (!pageData) {
-    return <div>Page not found</div>
+    notFound()
   }
 
   return (
