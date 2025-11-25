@@ -13,24 +13,17 @@ interface CloudinaryAdapterArgs {
 export const cloudinaryAdapter = ({
   folder = 'portfolio',
 }: CloudinaryAdapterArgs): Adapter => {
-  // Return the Adapter function
-  return ({ collection, prefix }) => {
-    const handleUpload: HandleUpload = async ({
-      file,
-      collection,
-      data,
-      req,
-      clientUploadContext,
-    }) => {
+  return () => {
+    const handleUpload: HandleUpload = async ({ file }) => {
       try {
-        // Upload the file to Cloudinary using upload_stream
         const uploadResult = await new Promise<UploadApiResponse>((resolve, reject) => {
           const uploadStream = cloudinary.uploader.upload_stream(
             {
-              resource_type: 'auto', // auto-detect file type (image, video, etc.)
-              public_id: `${folder}/${file.filename.replace(/\.[^/.]+$/, '')}`, // Set custom file name without extension
-              overwrite: false, // Do not overwrite if a file with the same name exists
-              use_filename: true, // Use original filename
+              resource_type: 'auto',
+              folder,
+              public_id: file.filename.replace(/\.[^/.]+$/, ''),
+              overwrite: false,
+              unique_filename: true,
             },
             (error, result) => {
               if (error) return reject(error)
@@ -38,31 +31,29 @@ export const cloudinaryAdapter = ({
               resolve(result)
             },
           )
-          uploadStream.end(file.buffer) // Send the entire file buffer to Cloudinary
+          uploadStream.end(file.buffer)
         })
 
-        // Update file properties with Cloudinary response
-        file.filename = uploadResult.public_id // Use Cloudinary's public_id as the file's unique name
-        file.mimeType = `${uploadResult.format}` // Set MIME type based on Cloudinary's format
-        file.filesize = uploadResult.bytes // Set the actual file size in bytes
+        file.filename = `${uploadResult.public_id}.${uploadResult.format}`
+        file.mimeType = `${uploadResult.resource_type}/${uploadResult.format}`
+        file.filesize = uploadResult.bytes
       } catch (err) {
         console.error('Upload Error', err)
         throw err
       }
     }
 
-    const handleDelete: HandleDelete = async ({ collection, doc, filename, req }) => {
+    const handleDelete: HandleDelete = async ({ filename }) => {
       try {
-        // Remove the file from Cloudinary using the public_id
-        await cloudinary.uploader.destroy(`${folder}/${filename.replace(/\.[^/.]+$/, '')}`)
+        // filename is stored as "folder/name.ext", construct public_id
+        const publicId = `${folder}/${filename.replace(/\.[^/.]+$/, '')}`
+        await cloudinary.uploader.destroy(publicId)
       } catch (error) {
         console.error('Cloudinary Delete Error:', error)
       }
     }
 
-    const staticHandler: StaticHandler = async (req, { params }) => {
-      // For Cloudinary, we don't need to serve files directly
-      // Files are served from Cloudinary URLs
+    const staticHandler: StaticHandler = async () => {
       return new Response('Not implemented', { status: 501 })
     }
 

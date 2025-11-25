@@ -43,6 +43,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+      max: 5,
     },
   }),
   sharp,
@@ -62,8 +63,10 @@ export default buildConfig({
           }),
           disableLocalStorage: true,
           generateFileURL: ({ filename }) => {
-            // Generate the Cloudinary URL from the public_id
-            return cloudinary.url(filename, { secure: true })
+            const folder = process.env.CLOUDINARY_FOLDER || 'portfolio'
+            // Remove extension and prepend folder
+            const publicId = `${folder}/${filename.replace(/\.[^/.]+$/, '')}`
+            return cloudinary.url(publicId, { secure: true })
           },
         },
       },

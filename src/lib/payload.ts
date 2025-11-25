@@ -1,6 +1,13 @@
-import { getPayload } from 'payload'
+import { getPayload, Payload } from 'payload'
 import config from '@payload-config'
 
-export const getPayloadClient = async () => {
-  return await getPayload({ config })
+let cached: Payload | null = null
+
+export const getPayloadClient = async (): Promise<Payload> => {
+  if (cached) {
+    return cached
+  }
+
+  cached = await getPayload({ config })
+  return cached
 }
