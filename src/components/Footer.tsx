@@ -99,6 +99,46 @@ const Footer = () => {
           </div>
         </div>
         <div className="w-full">
+          <div className="text-center text-sm text-gray-300">
+            This site is built in{' '}
+            <a
+              href="https://nextjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              Next.js
+            </a>
+            ,{' '}
+            <a
+              href="https://payloadcms.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              Payload CMS
+            </a>
+            ,{' '}
+            <a
+              href="https://tailwindcss.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              Tailwind CSS
+            </a>{' '}
+            &{' '}
+            <a
+              href="https://supabase.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              Supabase
+            </a>
+          </div>
+        </div>
+        <div className="w-full">
           <div className="text-center text-white">
             <span className="font-bold">&copy; {currentYear} John Lomat</span> All Rights Reserved.
           </div>
