@@ -1,6 +1,5 @@
 import { HeadingTwo } from '@/components/ui/HeadingPreset'
 import SkillItem from '@/components/ui/SkillItem'
-import { TechnologyProps } from '@/types/TechnologyProps'
 import { skillsService } from '@/services'
 
 const SkillsSection = async () => {
@@ -21,7 +20,7 @@ const SkillsSection = async () => {
               <h3>Using now:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {usingNow?.technologies?.map((skill: TechnologyProps, index: number) => (
+              {usingNow?.technologies?.map((skill, index) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>
@@ -32,7 +31,7 @@ const SkillsSection = async () => {
               <h3>Learning:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {learning?.technologies?.map((skill: TechnologyProps, index: number) => (
+              {learning?.technologies?.map((skill, index) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>
@@ -43,7 +42,7 @@ const SkillsSection = async () => {
               <h3>Other skills:</h3>
             </div>
             <div className="flex flex-wrap gap-y-12">
-              {otherSkills?.technologies?.map((skill: TechnologyProps, index: number) => (
+              {otherSkills?.technologies?.map((skill, index) => (
                 <SkillItem key={index} {...skill} />
               ))}
             </div>

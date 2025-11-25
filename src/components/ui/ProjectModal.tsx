@@ -3,8 +3,16 @@ import { Open_Sans, Montserrat } from 'next/font/google'
 import { Button, Modal } from 'flowbite-react'
 import Serialize from '@/components/richtext/serialize'
 import TechStack from '@/components/ui/TechStack'
-import { ProjectProps } from '@/types/ProjectProps'
+import { Project } from '@/payload-types'
 import { cn } from '@/lib/utils'
+
+type ProjectModalProps = Pick<
+  Project,
+  'title' | 'project_overview' | 'website_type' | 'key_features' | 'tech_stacks' | 'demo_link' | 'screenshot_link'
+> & {
+  isOpen?: boolean
+  onClose?: () => void
+}
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -26,7 +34,7 @@ const ProjectModal = ({
   screenshot_link,
   isOpen,
   onClose,
-}: ProjectProps) => {
+}: ProjectModalProps) => {
   return (
     <Modal show={isOpen} onClose={onClose}>
       <Modal.Header className={cn(open_sans.className, 'modal-header')}>{title}</Modal.Header>

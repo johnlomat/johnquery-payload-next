@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import { Tooltip, Flowbite } from 'flowbite-react'
 import TooltipTheme from '@/components/themes/flowbite-react/TooltipTheme'
-import { TechnologyProps } from '@/types/TechnologyProps'
+import { Project } from '@/payload-types'
 
-const TechStack = ({ technology }: TechnologyProps) => {
+type TechStackProps = NonNullable<Project['tech_stacks']>[number]
+
+const TechStack = ({ technology }: TechStackProps) => {
   // Handle case where technology is a number (not populated) or null
   if (typeof technology !== 'object' || !technology) {
     return null

@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { TechnologyProps } from '@/types/TechnologyProps'
+import { Project } from '@/payload-types'
 
-const SkillItem = ({ technology }: TechnologyProps) => {
+type SkillItemProps = NonNullable<Project['tech_stacks']>[number]
+
+const SkillItem = ({ technology }: SkillItemProps) => {
   // Handle case where technology is a number (not populated) or null
   if (typeof technology !== 'object' || !technology) {
     return null

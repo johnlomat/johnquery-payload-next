@@ -1,19 +1,16 @@
 import React from 'react'
 import { JSXConvertersFunction, RichText } from '@payloadcms/richtext-lexical/react'
 
+import { Project } from '@/payload-types'
 import { cn } from '@/lib/utils'
 
-type RichTextData = React.ComponentProps<typeof RichText>['data']
-
 interface SerializeProps {
-  nodes: RichTextData | null | undefined
+  nodes: Project['project_overview']
   className?: string
 }
 
-// Custom JSX converters for Lexical rich text
 const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
-  // You can customize individual converters here if needed
 })
 
 const Serialize: React.FC<SerializeProps> = ({ nodes, className }) => {
@@ -24,7 +21,7 @@ const Serialize: React.FC<SerializeProps> = ({ nodes, className }) => {
   return (
     <RichText
       converters={jsxConverters}
-      data={nodes}
+      data={nodes as React.ComponentProps<typeof RichText>['data']}
       disableIndent={false}
       disableTextAlign={false}
       className={cn(
