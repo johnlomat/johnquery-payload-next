@@ -5,65 +5,68 @@ import { useEffect, useState } from 'react'
 
 type RowData = Record<string, unknown>
 
-export const RowLabel = () => {
-  const { data, rowNumber } = useRowLabel<RowData>()
-  const [label, setLabel] = useState<string>(`Item ${(rowNumber ?? 0) + 1}`)
+// Cache the Promise to prevent duplicate fetches for same ID
+const fetchCache = new Map<string, Promise<string | null>>()
 
-  useEffect(() => {
-    const fetchLabel = async () => {
-      const result = await getLabel(data)
-      if (result) {
-        setLabel(result)
-      } else {
-        setLabel(`Item ${(rowNumber ?? 0) + 1}`)
-      }
-    }
-    fetchLabel()
-  }, [data, rowNumber])
+const fetchTechnologyTitle = (id: number): Promise<string | null> => {
+  const cacheKey = `tech-${id}`
 
-  return <span>{label}</span>
-}
+  if (!fetchCache.has(cacheKey)) {
+    const promise = fetch(`/api/technologies/${id}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((doc) => doc?.title || null)
+      .catch(() => null)
 
-async function getLabel(data: RowData | undefined): Promise<string | null> {
-  if (!data) return null
-
-  // Check for direct name/title fields
-  if (typeof data.name === 'string') return data.name
-  if (typeof data.title === 'string') return data.title
-
-  // Check for relationship fields
-  for (const [key, value] of Object.entries(data)) {
-    if (key === 'id') continue
-
-    // If it's a populated object with name/title
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
-      const obj = value as Record<string, unknown>
-      if (typeof obj.name === 'string') return obj.name
-      if (typeof obj.title === 'string') return obj.title
-    }
-
-    // If it's just an ID (number or string), try to fetch the relationship
-    if ((typeof value === 'number' || typeof value === 'string') && value) {
-      try {
-        const response = await fetch(`/api/technologies?where[id][equals]=${value}&limit=1`)
-        if (response.ok) {
-          const result = await response.json()
-          if (result.docs?.[0]?.title) return result.docs[0].title
-        }
-      } catch {
-        // Try media collection if technologies fails
-        try {
-          const response = await fetch(`/api/media?where[id][equals]=${value}&limit=1`)
-          if (response.ok) {
-            const result = await response.json()
-            if (result.docs?.[0]?.filename) return result.docs[0].filename
-          }
-        } catch {
-          // Ignore fetch errors
-        }
-      }
-    }
+    fetchCache.set(cacheKey, promise)
   }
 
-  return null
+  return fetchCache.get(cacheKey)!
+}
+
+export const RowLabel = () => {
+  const { data, rowNumber } = useRowLabel<RowData>()
+  const fallback = `Item ${(rowNumber ?? 0) + 1}`
+  const [label, setLabel] = useState(fallback)
+
+  useEffect(() => {
+    if (!data) return
+
+    // Check direct fields first
+    if (typeof data.name === 'string') {
+      setLabel(data.name)
+      return
+    }
+    if (typeof data.title === 'string') {
+      setLabel(data.title)
+      return
+    }
+
+    // Check for populated or ID-only relationships
+    for (const [key, value] of Object.entries(data)) {
+      if (key === 'id') continue
+
+      // Already populated object
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        const obj = value as Record<string, unknown>
+        if (typeof obj.title === 'string') {
+          setLabel(obj.title)
+          return
+        }
+        if (typeof obj.name === 'string') {
+          setLabel(obj.name)
+          return
+        }
+      }
+
+      // Just an ID - use cached fetch
+      if (typeof value === 'number' && value) {
+        fetchTechnologyTitle(value).then((title) => {
+          if (title) setLabel(title)
+        })
+        return
+      }
+    }
+  }, [data, fallback])
+
+  return <span>{label}</span>
 }
