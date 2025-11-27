@@ -73,6 +73,7 @@ export interface Config {
     projects: Project;
     skills: Skill;
     technologies: Technology;
+    'contact-form-submissions': ContactFormSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     skills: SkillsSelect<false> | SkillsSelect<true>;
     technologies: TechnologiesSelect<false> | TechnologiesSelect<true>;
+    'contact-form-submissions': ContactFormSubmissionsSelect<false> | ContactFormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -320,6 +322,18 @@ export interface Skill {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-form-submissions".
+ */
+export interface ContactFormSubmission {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -365,6 +379,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'technologies';
         value: number | Technology;
+      } | null)
+    | ({
+        relationTo: 'contact-form-submissions';
+        value: number | ContactFormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -526,6 +544,17 @@ export interface SkillsSelect<T extends boolean = true> {
 export interface TechnologiesSelect<T extends boolean = true> {
   title?: T;
   image_details?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-form-submissions_select".
+ */
+export interface ContactFormSubmissionsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
   updatedAt?: T;
   createdAt?: T;
 }

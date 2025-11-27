@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer'
 import { NextRequest, NextResponse } from 'next/server'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 export async function POST(req: NextRequest) {
   const { email, name, message } = await req.json()
@@ -25,12 +27,23 @@ export async function POST(req: NextRequest) {
       user: process.env.SMTP_USERNAME,
       pass: process.env.SMTP_PASSWORD,
     },
-    // logger: true,
-    // debug: true,
   })
 
   try {
+    // Send email notification first
     const info = await transporter.sendMail(mailOptions)
+
+    // Save submission to database only after email succeeds
+    const payload = await getPayload({ config })
+    await payload.create({
+      collection: 'contact-form-submissions',
+      data: {
+        name,
+        email,
+        message,
+      },
+    })
+
     return NextResponse.json(
       {
         success: `Message delivered to ${info.accepted}`,

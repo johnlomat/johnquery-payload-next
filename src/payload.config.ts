@@ -14,6 +14,7 @@ import Pages from './collections/Pages'
 import Projects from './collections/Projects'
 import Skills from './collections/Skills'
 import Technologies from './collections/Technologies'
+import ContactFormSubmissions from './collections/forms/ContactFormSubmissions'
 import { cloudinaryAdapter } from './lib/cloudinary-adapter'
 import KeywordsField from './fields/payload-seo-plugin/keywords-field'
 
@@ -34,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Projects, Skills, Technologies],
+  collections: [Users, Media, Pages, Projects, Skills, Technologies, ContactFormSubmissions],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
