@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Open_Sans, Montserrat } from 'next/font/google'
-import { Button, Modal } from 'flowbite-react'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'flowbite-react'
 import Serialize from '@/components/richtext/serialize'
 import TechStack from '@/components/ui/TechStack'
 import { Project } from '@/payload-types'
@@ -37,8 +37,8 @@ const ProjectModal = ({
 }: ProjectModalProps) => {
   return (
     <Modal show={isOpen} onClose={onClose}>
-      <Modal.Header className={cn(open_sans.className, 'modal-header')}>{title}</Modal.Header>
-      <Modal.Body className={open_sans.className}>
+      <ModalHeader className={cn(open_sans.className, 'modal-header')}>{title}</ModalHeader>
+      <ModalBody className={open_sans.className}>
         <div className="space-y-6">
           <div className="w-full">
             <div className={cn(montserrat.className, 'uppercase text-cyan-700')}>
@@ -67,8 +67,8 @@ const ProjectModal = ({
             </div>
           </div>
         </div>
-      </Modal.Body>
-      <Modal.Footer className="justify-end">
+      </ModalBody>
+      <ModalFooter className="justify-end">
         {demo_link && (
           <Button
             as={Link}
@@ -101,7 +101,7 @@ const ProjectModal = ({
             Screenshot
           </Button>
         )}
-      </Modal.Footer>
+      </ModalFooter>
     </Modal>
   )
 }

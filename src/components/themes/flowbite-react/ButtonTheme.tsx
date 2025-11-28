@@ -1,6 +1,6 @@
-import type { CustomFlowbiteTheme } from 'flowbite-react'
+import { createTheme } from 'flowbite-react'
 
-const ButtonTheme: CustomFlowbiteTheme = {
+const ButtonTheme = createTheme({
   button: {
     base: 'group p-0.5 relative flex items-stretch justify-center',
     color: {
@@ -11,6 +11,6 @@ const ButtonTheme: CustomFlowbiteTheme = {
       base: 'flex items-stretch transition-all duration-200 relative',
     },
   },
-}
+})
 
 export default ButtonTheme

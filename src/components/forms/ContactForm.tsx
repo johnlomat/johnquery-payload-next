@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Toast, ToastToggle, Button, Label, TextInput, Textarea, Flowbite } from 'flowbite-react'
+import { Toast, ToastToggle, Button, Label, TextInput, Textarea, ThemeProvider, Spinner } from 'flowbite-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import useContactForm from '@/hooks/useContactForm'
@@ -55,7 +55,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="w-full rounded bg-white p-8 uppercase shadow-md">
         <div className="mb-4">
           <div className="mb-2 block">
-            <Label htmlFor="name" value="Name" className="font-montserrat font-bold" />
+            <Label htmlFor="name" className="font-montserrat font-bold">Name</Label>
           </div>
           <TextInput
             type="text"
@@ -69,7 +69,7 @@ export default function ContactForm() {
         </div>
         <div className="mb-4">
           <div className="mb-2 block">
-            <Label htmlFor="email" value="Email" className="font-montserrat font-bold" />
+            <Label htmlFor="email" className="font-montserrat font-bold">Email</Label>
           </div>
           <TextInput
             type="email"
@@ -83,7 +83,7 @@ export default function ContactForm() {
         </div>
         <div className="mb-4">
           <div className="mb-2 block">
-            <Label htmlFor="message" value="Message" className="font-montserrat font-bold" />
+            <Label htmlFor="message" className="font-montserrat font-bold">Message</Label>
           </div>
           <Textarea
             name="message"
@@ -96,16 +96,17 @@ export default function ContactForm() {
             className="font-open-sans"
           />
         </div>
-        <Flowbite theme={{ theme: ButtonTheme }}>
+        <ThemeProvider theme={ButtonTheme}>
           <Button
             type="submit"
             fullSized
             color="primary"
-            isProcessing={isSubmitting ? true : false}
+            disabled={isSubmitting}
           >
-            {!isSubmitting ? 'Submit' : 'Submitting'}
+            {isSubmitting && <Spinner size="sm" className="me-2" />}
+            {isSubmitting ? 'Submitting' : 'Submit'}
           </Button>
-        </Flowbite>
+        </ThemeProvider>
       </form>
       {responseMessage.message && (
         <Toast id={responseMessage.isSuccessful ? 'contact-toast-success' : 'contact-toast-error'} className="fixed bottom-4 left-1/2 z-10 m-0 w-4/5 max-w-none -translate-x-1/2 p-4 md:w-auto">
