@@ -8,7 +8,7 @@ const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'updatedAt', 'createdAt'],
+    defaultColumns: ['title', '_status', 'updatedAt', 'createdAt'],
   },
   versions: {
     drafts: true,
