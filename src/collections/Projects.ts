@@ -8,6 +8,9 @@ const Projects: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'website_type', 'updatedAt', 'createdAt'],
   },
+  versions: {
+    drafts: true,
+  },
   access: {
     read: () => true,
     create: isLoggedIn,

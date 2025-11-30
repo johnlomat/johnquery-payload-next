@@ -10,6 +10,9 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'updatedAt', 'createdAt'],
   },
+  versions: {
+    drafts: true,
+  },
   access: {
     read: () => true,
     update: isLoggedIn,

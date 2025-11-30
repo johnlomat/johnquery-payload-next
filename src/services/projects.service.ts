@@ -8,6 +8,11 @@ class ProjectsService {
         collection: 'projects',
         limit,
         depth: 2,
+        where: {
+          _status: {
+            equals: 'published',
+          },
+        },
       })
 
       return result
