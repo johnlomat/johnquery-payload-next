@@ -34,7 +34,7 @@
     "cross-env": "^7.0.3",
     "flowbite-react": "^0.10.2",
     "graphql": "^16.8.1",
-    "next": "15.4.8",
+    "next": "15.4.10",
     "nodemailer": "^7.0.7",
     "payload": "3.64.0",
     "react": "19.1.0",
