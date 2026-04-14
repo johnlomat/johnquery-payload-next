@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Toast, ToastToggle, Button, Label, TextInput, Textarea } from 'flowbite-react'
+import { Toast, ToastToggle, Button, Label, TextInput, Textarea, Spinner } from 'flowbite-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import useContactForm from '@/hooks/useContactForm'
@@ -107,13 +107,14 @@ export default function ContactForm() {
           color="primary"
           disabled={isSubmitting}
           theme={{
-            base: 'group p-0.5 relative flex justify-center items-center',
+            base: 'group p-0.5 relative flex justify-center items-center gap-2',
             color: {
               primary:
                 'border border-black bg-neutral-700 font-montserrat font-bold uppercase text-white transition ease-in-out enabled:hover:bg-cyan-700',
             },
           }}
         >
+          {isSubmitting && <Spinner size="sm" />}
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
