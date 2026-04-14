@@ -1,6 +1,5 @@
 import Image from 'next/image'
-import { Tooltip, Flowbite } from 'flowbite-react'
-import TooltipTheme from '@/components/themes/flowbite-react/TooltipTheme'
+import { Tooltip } from 'flowbite-react'
 import { Project } from '@/payload-types'
 
 type TechStackProps = NonNullable<Project['tech_stacks']>[number]
@@ -29,11 +28,9 @@ const TechStack = ({ technology }: TechStackProps) => {
   return (
     <div className="relative flex items-center justify-center">
       {url ? (
-        <Flowbite theme={{ theme: TooltipTheme }}>
-          <Tooltip content={title}>
-            <Image src={url} alt={alt} width={width ?? 48} height={height ?? 48} />
-          </Tooltip>
-        </Flowbite>
+        <Tooltip content={title} theme={{ content: 'relative z-20 whitespace-nowrap' }}>
+          <Image src={url} alt={alt} width={width ?? 48} height={height ?? 48} />
+        </Tooltip>
       ) : (
         <div className="flex h-12 w-12 items-center justify-center bg-gray-200 text-xs text-gray-500">
           {title}
