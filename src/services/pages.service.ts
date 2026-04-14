@@ -10,6 +10,9 @@ class PagesService {
           slug: {
             equals: slug,
           },
+          _status: {
+            equals: 'published',
+          },
         },
         limit: 1,
       })
@@ -26,6 +29,11 @@ class PagesService {
       const payload = await getPayloadClient()
       return await payload.find({
         collection: 'pages',
+        where: {
+          _status: {
+            equals: 'published',
+          },
+        },
       })
     } catch (error) {
       console.error('Error fetching pages:', error)

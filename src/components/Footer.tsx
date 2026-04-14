@@ -129,12 +129,12 @@ const Footer = () => {
             </a>{' '}
             &{' '}
             <a
-              href="https://supabase.com"
+              href="https://neon.tech"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:underline"
             >
-              Supabase
+              Neon
             </a>
           </div>
         </div>
