@@ -46,7 +46,7 @@ const ProjectCard = ({
         >
           Details
         </Button>
-        {typeof featured_image === 'object' && featured_image?.url ? (
+        {typeof featured_image === 'object' && !!featured_image?.url && (
           <Image
             src={featured_image.url}
             width={featured_image.width ?? 600}
@@ -54,7 +54,8 @@ const ProjectCard = ({
             alt={featured_image.alt}
             className="text-white grayscale group-hover:grayscale-0"
           />
-        ) : (
+        )}
+        {(typeof featured_image !== 'object' || !featured_image?.url) && (
           <div className="flex h-48 w-full items-center justify-center bg-gray-200 text-gray-500">
             No Image Available
           </div>
