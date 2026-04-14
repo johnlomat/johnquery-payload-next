@@ -69,7 +69,7 @@ const ProjectModal = ({
         </div>
       </ModalBody>
       <ModalFooter className="justify-end">
-        {demo_link && (
+        {!!demo_link && (
           <Button
             as={Link}
             href={demo_link}
@@ -83,7 +83,7 @@ const ProjectModal = ({
             Demo
           </Button>
         )}
-        {screenshot_link && (
+        {!!screenshot_link && (
           <Button
             as={Link}
             href={screenshot_link}

@@ -117,7 +117,7 @@ export default function ContactForm() {
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
-      {responseMessage.message && (
+      {!!responseMessage.message && (
         <Toast
           id={responseMessage.isSuccessful ? 'contact-toast-success' : 'contact-toast-error'}
           className="fixed bottom-4 left-1/2 z-10 m-0 w-4/5 max-w-none -translate-x-1/2 p-4 md:w-auto"

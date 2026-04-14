@@ -27,11 +27,12 @@ const TechStack = ({ technology }: TechStackProps) => {
 
   return (
     <div className="relative flex items-center justify-center">
-      {url ? (
+      {!!url && (
         <Tooltip content={title} theme={{ content: 'relative z-20 whitespace-nowrap' }}>
           <Image src={url} alt={alt} width={width ?? 48} height={height ?? 48} />
         </Tooltip>
-      ) : (
+      )}
+      {!url && (
         <div className="flex h-12 w-12 items-center justify-center bg-gray-200 text-xs text-gray-500">
           {title}
         </div>
